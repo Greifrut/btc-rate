@@ -44,6 +44,7 @@ router.post("/user/login", validator.body(userSchema), async (req: ValidatedRequ
 router.post("/user/create", validator.body(userSchema), async (req: ValidatedRequest<IUserRequestSchema>, res) => {
     try {
         const response = await createController(req.body);
+        res.cookie(get("cookieName"), response.token, {httpOnly: true});
         res.json(response)
     } catch (e) {
         res.status(500).send(e.message);
