@@ -1,5 +1,6 @@
 import {Router} from "express";
 import * as Joi from "@hapi/joi";
+import {get} from "config";
 import "joi-extract-type";
 import {createValidator, ContainerTypes, ValidatedRequestSchema, ValidatedRequest} from "express-joi-validation";
 
@@ -33,6 +34,7 @@ router.get("/btcRate", Protected.check.bind(Protected), async (req: ValidatedReq
 router.post("/user/login", validator.body(userSchema), async (req: ValidatedRequest<IUserRequestSchema>, res) => {
    try {
        const response = await loginController(req.body);
+       res.cookie(get("cookieName"), response.token, {httpOnly: true});
        res.json(response)
    } catch (e) {
        res.status(404).send(e.message);

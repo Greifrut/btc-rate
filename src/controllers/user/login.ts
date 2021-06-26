@@ -1,9 +1,13 @@
 import User from "../../services/user";
 import Jwt from "../../services/jwt";
 
-export default async ({email, password}) => {
-    if (!email || !password) return false;
+interface ILogin {
+    email: string,
+    password: string,
+    token: string
+}
 
+export default async ({email, password}): Promise<ILogin> => {
     await User.login({
         email,
         password

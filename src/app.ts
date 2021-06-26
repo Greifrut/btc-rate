@@ -3,6 +3,7 @@ import * as config from "config";
 import * as bodyParser from "body-parser";
 import * as http from "http";
 import * as logger from "morgan";
+import * as cookieParser from "cookie-parser";
 import Db from "./db/db";
 
 import router from "./routes";
@@ -11,6 +12,7 @@ const app = express();
 const port = config.get("server.port");
 
 app.use(logger("dev"));
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router);

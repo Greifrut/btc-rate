@@ -1,4 +1,5 @@
 import {Request, Response} from "express";
+import {get} from "config";
 import Jwt from "../services/jwt";
 import User from "../services/user";
 
@@ -10,6 +11,7 @@ enum AuthTypes {
 class Protected {
     private _req: Request;
     private _res: Response;
+    private readonly tokenKey: string = get("cookieName");
 
     constructor() {}
 
@@ -18,18 +20,35 @@ class Protected {
             this._req = req;
             this._res = res;
 
-            const authType: AuthTypes | null = this._getAuthorizationType();
-
-            if (!authType) res.status(404).send("Provide valid authorization");
-
-            const verifier = this._getVerifier(authType);
-
-            await verifier();
+            if (this._hasTokenInCookies()) {
+               await this._checkCookies();
+            } else {
+              await this._checkAuthHeader();
+            }
 
             next();
         } catch (e) {
             res.status(404).send(e.message);
         }
+    }
+
+    private _hasTokenInCookies() {
+        return this.tokenKey in this._req.cookies;
+    }
+
+    private async _checkCookies() {
+       const token = this._req.cookies[this.tokenKey];
+       await this._bearer({token});
+    }
+
+    private async _checkAuthHeader() {
+        const authType: AuthTypes | null = this._getAuthorizationType();
+
+        if (!authType) this._res.status(404).send("Provide valid authorization");
+
+        const verifier = this._getVerifier(authType);
+
+        await verifier();
     }
 
     private _getAuthorizationType(): AuthTypes {
@@ -50,8 +69,7 @@ class Protected {
         return authorization.split(" ")[1];
     }
 
-    private async _bearer() {
-        const token = this._getAuthorizationValue();
+    private async _bearer({token = this._getAuthorizationValue()}) {
         await Jwt.verify(token)
     }
 
