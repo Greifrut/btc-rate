@@ -27,8 +27,7 @@ class Db {
 
             return data;
         } catch (e) {
-            console.log(e);
-            return null;
+            throw new Error(e.message);
         }
     }
 

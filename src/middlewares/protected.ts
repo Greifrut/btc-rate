@@ -52,15 +52,13 @@ class Protected {
 
     private async _bearer() {
         const token = this._getAuthorizationValue();
-
-        return await Jwt.verify(token);
+        await Jwt.verify(token)
     }
 
     private async _basic() {
         const basicAuth = Buffer.from(this._getAuthorizationValue(), "base64").toString();
         const [email, password] = basicAuth.split(":");
 
-        console.log({email, password});
         await User.login({email, password});
         return true;
     }

@@ -22,8 +22,6 @@ class User {
         const userDb = await  Db.read(this.dbName);
         const existingUser = userDb.where("email", userCredentials.email).query();
 
-        console.log({existingUser})
-
         if (existingUser.length > 0) throw new Error("User exist");
 
         const user = await Db.write<IUser>(this.dbName, userCredentials);

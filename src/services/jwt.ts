@@ -28,22 +28,19 @@ class Jwt {
             const pubPayload = verify(pubToken, this.publicSecret) as Partial<JwtPayload>;
             const {email, privateToken} = pubPayload as Partial<JwtPayload> & IPubToken;
 
-            if (!email || !privateToken) return false;
+            if (!email || !privateToken) throw new Error("Authorization failed. Please provide valid token");
 
             const db = await Db.read("users");
             const user = db.where("email", email).query()[0];
 
-            if (!user) return false;
+            if (!user) throw new Error("Authorization failed. Please provide valid token");
 
             const privatPayload = verify(privateToken, this.privateSecret);
             const {password, exp} = privatPayload as Partial<JwtPayload>;
 
-            if (password !== user.password || Date.now() > exp * 1000) return false;
-
-            return true;
-
+            if (password !== user.password || Date.now() > exp * 1000) throw new Error("Authorization failed. Please provide valid token");
         } catch (e) {
-            return false;
+            throw new Error(e.message);
         }
     }
 }
