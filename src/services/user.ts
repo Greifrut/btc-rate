@@ -12,11 +12,10 @@ class User {
 
     async login({email, password}: IUser) {
         const userDb = await Db.read(this.dbName);
-        const user = userDb.where("email", email).where("password", password).query();
+        const user = userDb.where("email", email).query()[0];
 
-        if (!user) return false;
-
-        return true;
+        if (!user) throw new Error("User doesn't exist");
+        if (user.password !== password) throw new Error("Wrong password");
     }
 
     async register(userCredentials: IUser) {

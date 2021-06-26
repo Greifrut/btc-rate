@@ -1,7 +1,7 @@
 import Btc from "../services/btc";
 
-export default async (req, res) => {
+export default async () => {
     const rate = await Btc.getPrice();
 
-    res.json(rate);
+    return rate;
 }

@@ -1,20 +1,19 @@
 import User from "../../services/user";
+import Jwt from "../../services/jwt";
 
-export default async (req, res) => {
-    try {
-        const {email, password} = req.body;
-        if (!email || !password) res.status(404).send("Please provide email and password");
+export default async ({email, password}) => {
+    if (!email || !password) throw new Error();
 
-       await User.register({
-            email,
-            password
-        });
+    await User.register({
+        email,
+        password
+    });
 
-       res.send({
-           email,
-           password
-       })
-    } catch (e) {
-        res.status(404).send(e.message);
+    const token = Jwt.create({email, password});
+
+    return {
+        email,
+        password,
+        token
     }
 }

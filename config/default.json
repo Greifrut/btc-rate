@@ -2,7 +2,8 @@
   "server": {
     "port": 3001
   },
-  "db": {
-    "modelFolder": "models"
+  "jwt": {
+    "publicTokenSecret": "QLWfqsZLsvmgcVkaM4Ad34x0rm5y2xDK",
+    "privateTokenSecret": "IapqQGqnCZclkO5VXZhtJehbTfwLAZ8J"
   }
 }

@@ -35,21 +35,17 @@ class Db {
     async read (dbName: string): Promise<this> {
         this._resetQueriedData();
         const data = await fs.readFile(`${this.dbFolder}${dbName}.json`);
-        console.log(data.toString())
         this.queriedData = JSON.parse(data.toString());
         return this;
     }
 
     where(field: string, value: any) {
-        console.log({
-           data: this.queriedData
-        })
         this.queriedData = this.queriedData.filter((row) => row[field] === value);
         return this;
     }
 
     private _isDbExists(dbName: string) {
-        return existsSync(`${this.dbFolder}${dbName}`);
+        return existsSync(`${this.dbFolder}${dbName}.json`);
     }
 
     private _resetQueriedData() {
