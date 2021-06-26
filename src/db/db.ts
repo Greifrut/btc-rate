@@ -1,48 +1,59 @@
-import {writeFile, readFile} from "fs/promises";
+import {exists, promises as fs} from "fs";
+import {existsSync} from "fs";
 
 class Db {
-    private dbFolder: string = `${__dirname}/src/db/tables/`;
+    private dbFolder: string = `${__dirname}/tables/`;
     private queriedData: any = [];
 
     constructor() {}
 
-    private _resetQueriedData() {
-        this.queriedData = [];
-    }
-
     createDB(name: string) {
-        writeFile(`${this.dbFolder}${name}.json`, JSON.stringify([]));
+        if (this._isDbExists(name)) return;
+        fs.writeFile(`${this.dbFolder}${name}.json`, JSON.stringify([]));
     }
 
-    async query() {
+    query(): any[] {
         return this.queriedData;
     }
 
     async write<T = any>(dbName: string, data: T): Promise<T | null> {
         try {
             const existingData = (await this.read(dbName)).query();
-            const newData = [existingData, data];
+            const newData = [...existingData, data];
 
-            await writeFile(`${this.dbFolder}${dbName}.json`, JSON.stringify(newData));
+            await fs.writeFile(`${this.dbFolder}${dbName}.json`, JSON.stringify(newData));
 
             this._resetQueriedData();
 
             return data;
         } catch (e) {
+            console.log(e);
             return null;
         }
     }
 
     async read (dbName: string): Promise<this> {
         this._resetQueriedData();
-        const data = await readFile(`${this.dbFolder}${dbName}`);
+        const data = await fs.readFile(`${this.dbFolder}${dbName}.json`);
+        console.log(data.toString())
         this.queriedData = JSON.parse(data.toString());
         return this;
     }
 
     where(field: string, value: any) {
+        console.log({
+           data: this.queriedData
+        })
         this.queriedData = this.queriedData.filter((row) => row[field] === value);
         return this;
+    }
+
+    private _isDbExists(dbName: string) {
+        return existsSync(`${this.dbFolder}${dbName}`);
+    }
+
+    private _resetQueriedData() {
+        this.queriedData = [];
     }
 }
 

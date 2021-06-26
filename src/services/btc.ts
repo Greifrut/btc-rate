@@ -1,10 +1,16 @@
 import axios from "axios";
 
 class Btc {
-    constructor() {}
+    constructor() {
+    }
 
     async getPrice() {
-      return await axios.get("https://api.coindesk.com/v1/bpi/currentprice.json");
+        const {data: {bpi: {UAH}}} = await axios.get("https://api.coindesk.com/v1/bpi/currentprice/UAH.json");
+
+        return  {
+            btcValue: 1,
+            rate: UAH.rate_float
+        };
     }
 }
 
