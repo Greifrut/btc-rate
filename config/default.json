@@ -2,6 +2,9 @@
   "server": {
     "port": 3001
   },
+  "db": {
+    "users": "users"
+  },
   "cookieName": "btcAppToken",
   "btcApi": "https://api.coindesk.com/v1/bpi/currentprice/UAH.json",
   "jwt": {

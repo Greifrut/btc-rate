@@ -22,15 +22,15 @@ Also, token will save in cookies.
 
 |          Name | Required |  Type   | Description |
 | -------------:|:--------:|:-------:| ----------------------------------------- |
-|     `email` | true | string(email)  | User valid email |
-|      `password`| true | string | User password |
+|     `email` | true | string(email)  | UserService valid email |
+|      `password`| true | string | UserService password |
 
 **Return Data**
 
 |          Name | Required |  Type   | Description |
 | -------------:|:--------:|:-------:| ----------------------------------------- |
-|     `email` | true | string(email)  | User valid email |
-|      `password`| true | string | User password |
+|     `email` | true | string(email)  | UserService valid email |
+|      `password`| true | string | UserService password |
 |      `token`| true | string | JWT Token for auth |
 
 
@@ -42,13 +42,13 @@ Also, token will save in cookies.
 
 |          Name | Required |  Type   | Description |
 | -------------:|:--------:|:-------:| ----------------------------------------- |
-|     `email` | true | string(email)  | User valid email |
-|      `password`| true | string | User password |
+|     `email` | true | string(email)  | UserService valid email |
+|      `password`| true |string | UserService password |
 
 **Return Data**
 
 |          Name | Required |  Type   | Description |
 | -------------:|:--------:|:-------:| ----------------------------------------- |
-|     `email` | true | string(email)  | User valid email |
-|     `password`| true | string | User password |
+|     `email` | true | string(email)  | UserService valid email |
+|     `password`| true | string | UserService password |
 |     `token`| true | string | JWT Token for auth |
