@@ -1,16 +1,12 @@
-import { Request, Response } from "express";
+import { Request } from "express";
 
 import AuthTypes from "../types/enums/AuthTypes";
-import IProtected from "../types/interfaces/IProtected";
 import { IJwtService } from "../types/interfaces/IJwtService";
 import { IUserService } from "../types/interfaces/IUserService";
+import {IMiddlewareProvider, MiddlewareResponse} from "../types/interfaces/IMiddlewareProvider";
 
-export class Protected implements IProtected {
+export class Protected implements IMiddlewareProvider {
   private req: Request;
-
-  private res: Response;
-
-  // Private readonly tokenKey: string = get('cookieName');
 
   constructor(
     private readonly jwtService: IJwtService,
@@ -18,22 +14,29 @@ export class Protected implements IProtected {
     private readonly tokenKey: string
   ) {
     this.isValidAuth = this.isValidAuth.bind(this);
+    this.check = this.check.bind(this);
   }
 
-  async isValidAuth(req: Request, res: Response, next) {
+  async check(req: Request): Promise<MiddlewareResponse> {
+    try {
+      await this.isValidAuth(req);
+      return [true, null];
+    } catch (e) {
+      return [false, e.message];
+    }
+  }
+
+  private async isValidAuth(req: Request) {
     try {
       this.req = req;
-      this.res = res;
 
       if (this.hasTokenInCookies()) {
         await this.checkCookies();
       } else {
         await this.isAuthTypeValid();
       }
-
-      next();
     } catch (e) {
-      res.status(404).send(e.message);
+      throw new Error(e.message);
     }
   }
 
@@ -42,19 +45,27 @@ export class Protected implements IProtected {
   }
 
   private async checkCookies() {
-    const token = this.req.cookies[this.tokenKey];
-    await this.bearer({ token });
+    try {
+      const token = this.req.cookies[this.tokenKey];
+      await this.bearer({ token });
+    } catch (e) {
+      throw new Error("Invalid token. Please re-login")
+    }
   }
 
   private async bearer({ token = this.getAuthorizationValue() }) {
-    await this.jwtService.verify(token);
+    try {
+      await this.jwtService.verify(token);
+    } catch (e) {
+      throw new Error("Provide valid token");
+    }
   }
 
   private async isAuthTypeValid() {
     const authType: AuthTypes | null = this.getAuthTypeFromRequestHeader();
 
     if (!authType) {
-      this.res.status(404).send("Provide valid authorization");
+      throw new Error("Provide valid authorization");
     }
 
     const verifier = this.getVerifier(authType);
@@ -93,18 +104,21 @@ export class Protected implements IProtected {
   }
 
   private async basic() {
-    const basicAuth = Buffer.from(
-      this.getAuthorizationValue(),
-      "base64"
-    ).toString();
-    const [email, password] = basicAuth.split(":");
+    try {
+      const basicAuth = Buffer.from(
+          this.getAuthorizationValue(),
+          "base64"
+      ).toString();
+      const [email, password] = basicAuth.split(":");
 
-    await this.userService.login({ email, password });
+      await this.userService.login({ email, password });
 
-    return true;
+    } catch (e) {
+      throw new Error("Provide valid login or password");
+    }
   }
 
   private getVerifier(authType: AuthTypes) {
-    return this[`${authType.toLowerCase()}`].bind(this);
+    return this[`${authType.toLowerCase()}`].bind(this, {});
   }
 }
