@@ -3,10 +3,7 @@ import { IDb } from "../types/interfaces/IDB";
 import { User } from "../types/types/User";
 
 export class UserService implements IUserService {
-  constructor(
-    private readonly database: IDb,
-    private readonly dbName: string
-  ) {
+  constructor(private readonly database: IDb, private readonly dbName: string) {
     this.register = this.register.bind(this);
     this.login = this.login.bind(this);
   }
