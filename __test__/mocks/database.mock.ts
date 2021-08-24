@@ -10,6 +10,10 @@ export class MockDatabase implements IDb {
     return true;
   }
 
+  removeTable(name: string): Promise<boolean> {
+    return Promise.resolve(true);
+  }
+
   query<T>(): T[] {
     return this.q;
   }
