@@ -52,3 +52,15 @@ Also, token will save in cookies.
 |     `email` | true | string(email)  | UserService valid email |
 |     `password`| true | string | UserService password |
 |     `token`| true | string | JWT Token for auth |
+
+**Test**
+```bash
+# Run all test
+npm run test:all
+
+#Run integration tests
+npm run test:int
+
+#Run unit tests
+npm run test:unit
+```
