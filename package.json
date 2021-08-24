@@ -8,8 +8,8 @@
     "start": "nodemon --ignore '*.json'",
     "inspect": "nodemon --inspect src/app.ts",
     "lint": "eslint . --ext .js,.ts --fix",
-    "test:unit": "mocha -r ts-node/register __test__/unit/**/*.spec.ts",
-    "test:int": "mocha -r ts-node/register __test__/int/*.spec..ts",
+    "test:unit": "export NODE_ENV=test && mocha -r ts-node/register __test__/unit/**/*.spec.ts",
+    "test:int": "export NODE_ENV=test && mocha -r ts-node/register __test__/int/*.spec.ts",
     "test:all": "npm run test:unit && npm run test:int"
   },
   "author": "",

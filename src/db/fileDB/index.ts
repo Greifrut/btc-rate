@@ -21,6 +21,15 @@ export class FileDB implements IDb {
     }
   }
 
+  async removeTable(name: string): Promise<boolean> {
+    try {
+      await fs.unlink(`${this.dbFolder}${name}.json`);
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
   query<T>(): T[] {
     return this.queriedData;
   }

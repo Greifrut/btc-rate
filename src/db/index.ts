@@ -13,6 +13,10 @@ class Database implements IDbConnector {
     return this.database.createTable(name);
   }
 
+  removeTable(name: string): Promise<boolean> {
+    return this.database.removeTable(name);
+  }
+
   query<T>(): T[] {
     return this.database.query<T>();
   }

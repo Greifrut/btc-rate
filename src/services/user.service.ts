@@ -6,7 +6,10 @@ export class UserService implements IUserService {
   constructor(
     private readonly database: IDb,
     private readonly dbName: string
-  ) {}
+  ) {
+    this.register = this.register.bind(this);
+    this.login = this.login.bind(this);
+  }
 
   async login({ email, password }: User): Promise<User> {
     const userDb = await this.database.read(this.dbName);
