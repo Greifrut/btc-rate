@@ -18,7 +18,7 @@ describe("BTC service", () => {
         rate: 1,
       });
     });
-    it("When called with coins count, expect return a current btc rate for count of coins", async () => {
+    it("When called with coins, expect return a current btc rate for coins", async () => {
       const btcService = new BtcService(new RequestMock(), "");
 
       const btcResponse = await btcService.getPrice({ coins: 2 });
@@ -28,7 +28,7 @@ describe("BTC service", () => {
         rate: 2,
       });
     });
-    it("When called, but btc server is didn't response, expect error 'BTC server is unavailable'", async () => {
+    it("When getRate is called, but btc server is didn't response, expect error 'BTC server is unavailable'", async () => {
       const request = new RequestMock();
       request.get = () => Promise.reject(new Error());
       const btcService = new BtcService(request, "");

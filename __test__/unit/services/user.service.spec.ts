@@ -12,7 +12,7 @@ const wrongTestUser = { ...testUser, password: "tst" };
 
 describe("User service", () => {
   describe("#login", () => {
-    it("When user is exist in database, expect user to be logged in", async () => {
+    it("When user is registered, expect user to be logged in", async () => {
       const database = new MockDatabase();
       const userService = new UserService(database, "users");
 
@@ -23,7 +23,7 @@ describe("User service", () => {
 
       expect(loggedUser).is.deep.equal(testUser);
     });
-    it("When user is doesn't exist in database, expect error 'User doesn't exist'", async () => {
+    it("When user is didn't registered, expect error 'User doesn't exist'", async () => {
       const database = new MockDatabase();
       const userService = new UserService(database, "users");
 
@@ -33,7 +33,7 @@ describe("User service", () => {
         "User doesn't exist"
       );
     });
-    it("When user provide wrong password, expect error 'Wrong password'", async () => {
+    it("When user provided wrong password, expect error 'Wrong password'", async () => {
       const database = new MockDatabase();
       const userService = new UserService(database, "users");
 

@@ -77,7 +77,7 @@ describe("JWT service", () => {
 
       expect(isValidUser).is.true;
     });
-    it("When not valid token provided, expect error 'Authorization failed. Please provide valid token'", async () => {
+    it("When token is invalid, expect error 'Authorization failed. Please provide valid token'", async () => {
       const jwtService = new JwtService(
         new MockDatabase(),
         new TokenUtilsMock(),
@@ -89,7 +89,7 @@ describe("JWT service", () => {
         "Authorization failed. Please provide valid token"
       );
     });
-    it("When token is valid, but token is expired, expect error 'Authorization failed. Please re-login'", async () => {
+    it("When token is expired, expect error 'Authorization failed. Please re-login'", async () => {
       const token = {
         email: "email_test",
         privateToken: JSON.stringify({
