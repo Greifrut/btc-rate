@@ -17,7 +17,7 @@ export class BtcService implements IBtcService {
         rate: Number(coins) * UAH.rate_float,
       };
     } catch (e) {
-     throw new Error("BTC server is unavailable");
+      throw new Error("BTC server is unavailable");
     }
   }
 }

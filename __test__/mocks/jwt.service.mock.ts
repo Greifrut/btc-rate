@@ -1,11 +1,14 @@
-import {IJwtService} from "../../src/types/interfaces/IJwtService";
+import { IJwtService } from "../../src/types/interfaces/IJwtService";
 
 export class JwtServiceMock implements IJwtService {
-    create({email, password}: { email: any; password: any }): string {
-        return "";
-    }
+  private _pubToken: string;
 
-    verify(pubToken: string): Promise<boolean> {
-        return Promise.resolve(true);
-    }
+  create({}: { email: any; password: any }): string {
+    return "";
+  }
+
+  verify(pubToken: string): Promise<boolean> {
+    this._pubToken = pubToken;
+    return Promise.resolve(true);
+  }
 }

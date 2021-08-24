@@ -1,8 +1,8 @@
-import type {JwtPayload} from "jsonwebtoken";
-import {SignParams, VerifyParams} from "../types/TokenUtilsParams";
+import type { JwtPayload } from "jsonwebtoken";
+import { SignParams, VerifyParams } from "../types/TokenUtilsParams";
 
 export interface ITokenUtils {
-    sign({payload, secret, options}: SignParams): string;
+  sign({ payload, secret, options }: SignParams): string;
 
-    verify({token, secret}: VerifyParams): JwtPayload | string;
+  verify({ token, secret }: VerifyParams): JwtPayload | string;
 }

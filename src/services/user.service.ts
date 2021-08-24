@@ -3,7 +3,10 @@ import { IDb } from "../types/interfaces/IDB";
 import { User } from "../types/types/User";
 
 export class UserService implements IUserService {
-  constructor(private readonly database: IDb, private readonly dbName: string) {}
+  constructor(
+    private readonly database: IDb,
+    private readonly dbName: string
+  ) {}
 
   async login({ email, password }: User): Promise<User> {
     const userDb = await this.database.read(this.dbName);

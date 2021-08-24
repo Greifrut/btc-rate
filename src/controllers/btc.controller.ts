@@ -6,7 +6,7 @@ import { IBTCController } from "../types/interfaces/IBTCController";
 import { IBtcService } from "../types/interfaces/IBtcService";
 import Controller from "./controller";
 
-export class BTCController extends Controller implements IBTCController {
+export class BtcController extends Controller implements IBTCController {
   constructor(readonly btcService: IBtcService) {
     super();
   }

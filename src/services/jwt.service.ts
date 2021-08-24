@@ -1,14 +1,17 @@
-import { sign, verify } from "jsonwebtoken";
+import { sign } from "jsonwebtoken";
 
 import { IJwtService } from "../types/interfaces/IJwtService";
 import { PrivateToken } from "../types/types/PrivateToken";
 import { IPubToken } from "../types/interfaces/IPubToken";
 import { IDb } from "../types/interfaces/IDB";
 import { User } from "../types/types/User";
-import {ITokenUtils} from "../types/interfaces/ITokenUtils";
+import { ITokenUtils } from "../types/interfaces/ITokenUtils";
 
 export class JwtService implements IJwtService {
-  static isAuthValid(paramsIsNotNull, error = "Authorization failed. Please provide valid token"): boolean {
+  static isAuthValid(
+    paramsIsNotNull,
+    error = "Authorization failed. Please provide valid token"
+  ): boolean {
     if (paramsIsNotNull()) {
       return true;
     }
@@ -48,15 +51,13 @@ export class JwtService implements IJwtService {
       { expiresIn: "168h" }
     );
 
-    return this.tokenUtils.sign(
-        {
-          payload: {
-            email,
-            privateToken,
-          },
-          secret: this.publicSecret
-        }
-    );
+    return this.tokenUtils.sign({
+      payload: {
+        email,
+        privateToken,
+      },
+      secret: this.publicSecret,
+    });
   }
 
   async verify(pubToken: string): Promise<boolean> {
@@ -72,7 +73,10 @@ export class JwtService implements IJwtService {
       const { password, exp } = this.decodeToken<PrivateToken>(privateToken);
 
       JwtService.isAuthValid(() => password === user.password);
-      JwtService.isAuthValid(() => Date.now() < this.tokenExpireDate(exp), "Authorization failed. Please re-login");
+      JwtService.isAuthValid(
+        () => Date.now() < this.tokenExpireDate(exp),
+        "Authorization failed. Please re-login"
+      );
 
       return true;
     } catch (e) {
@@ -85,7 +89,7 @@ export class JwtService implements IJwtService {
   private decodeToken<T>(token: string): T {
     return this.tokenUtils.verify({
       token,
-      secret: this.publicSecret
+      secret: this.publicSecret,
     }) as T;
   }
 }

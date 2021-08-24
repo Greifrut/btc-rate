@@ -3,7 +3,10 @@ import { Request } from "express";
 import AuthTypes from "../types/enums/AuthTypes";
 import { IJwtService } from "../types/interfaces/IJwtService";
 import { IUserService } from "../types/interfaces/IUserService";
-import {IMiddlewareProvider, MiddlewareResponse} from "../types/interfaces/IMiddlewareProvider";
+import {
+  IMiddlewareProvider,
+  MiddlewareResponse,
+} from "../types/interfaces/IMiddlewareProvider";
 
 export class Protected implements IMiddlewareProvider {
   private req: Request;
@@ -49,7 +52,7 @@ export class Protected implements IMiddlewareProvider {
       const token = this.req.cookies[this.tokenKey];
       await this.bearer({ token });
     } catch (e) {
-      throw new Error("Invalid token. Please re-login")
+      throw new Error("Invalid token. Please re-login");
     }
   }
 
@@ -106,13 +109,12 @@ export class Protected implements IMiddlewareProvider {
   private async basic() {
     try {
       const basicAuth = Buffer.from(
-          this.getAuthorizationValue(),
-          "base64"
+        this.getAuthorizationValue(),
+        "base64"
       ).toString();
       const [email, password] = basicAuth.split(":");
 
       await this.userService.login({ email, password });
-
     } catch (e) {
       throw new Error("Provide valid login or password");
     }

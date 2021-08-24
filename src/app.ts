@@ -22,7 +22,9 @@ app.set("port", port);
 const server = http.createServer(app);
 
 const startServer = async () => {
-  await Db.use(new FileDB(`${__dirname}/db/fileDB/tables/`)).createTable("users");
+  await Db.use(new FileDB(`${__dirname}/db/fileDB/tables/`)).createTable(
+    "users"
+  );
 
   server.listen(port);
 
