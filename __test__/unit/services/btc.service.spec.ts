@@ -2,6 +2,7 @@ import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import { BtcService } from "../../../src/services/btc.service";
 import { RequestMock } from "../../mocks/request.mock";
+
 chai.use(chaiAsPromised);
 
 const { expect } = chai;

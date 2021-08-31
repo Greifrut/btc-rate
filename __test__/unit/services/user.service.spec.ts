@@ -2,10 +2,10 @@ import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 chai.use(chaiAsPromised);
 
-const { expect } = chai;
-
 import { UserService } from "../../../src/services/user.service";
 import { MockDatabase } from "../../mocks/database.mock";
+
+const { expect } = chai;
 
 const testUser = { email: "test@test.com", password: "test" };
 const wrongTestUser = { ...testUser, password: "tst" };
