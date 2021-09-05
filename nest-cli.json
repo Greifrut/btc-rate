@@ -1,0 +1,41 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/api-gateway/src",
+  "monorepo": true,
+  "root": "apps/api-gateway",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+  },
+  "projects": {
+    "api-gateway": {
+      "type": "application",
+      "root": "apps/api-gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/api-gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/api-gateway/tsconfig.app.json"
+      }
+    },
+    "users": {
+      "type": "application",
+      "root": "apps/users",
+      "entryFile": "main",
+      "sourceRoot": "apps/users/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/users/tsconfig.app.json"
+      }
+    },
+    "crypto-rate": {
+      "type": "application",
+      "root": "apps/crypto-rate",
+      "entryFile": "main",
+      "sourceRoot": "apps/crypto-rate/src",
+      "compilerOptions": {
+        "assets": "**/*.proto",
+        "tsConfigPath": "apps/crypto-rate/tsconfig.app.json",
+        "watchAssets": true
+      }
+    }
+  }
+}

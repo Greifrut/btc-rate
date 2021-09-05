@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package cryptoRate;
+
+service CryptoRateService {
+  rpc getRate(RateParams) returns (Rate) {}
+}
+
+message RateParams {
+  int32 coins = 1;
+}
+
+message Rate {
+  int32 btcValue = 1;
+  int32 rate = 2;
+}
