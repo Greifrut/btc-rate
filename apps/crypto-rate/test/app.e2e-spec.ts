@@ -3,7 +3,7 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { CryptoRateModule } from './../src/CryptoRate.module';
 
-describe('CryptoRateController (e2e)', () => {
+describe('BaseController (e2e)', () => {
   let app: INestApplication;
 
   beforeEach(async () => {

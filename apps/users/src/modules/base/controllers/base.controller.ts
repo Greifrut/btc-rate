@@ -2,7 +2,7 @@ import { Controller } from '@nestjs/common';
 import { MessagePattern } from '@nestjs/microservices';
 
 @Controller()
-export class UsersController {
+export class BaseController {
   @MessagePattern({ cmd: 'createUser' })
   createUser(): string {
     return 'createUser';
