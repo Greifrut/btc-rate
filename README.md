@@ -5,6 +5,7 @@
 [Testing](https://github.com/Greifrut/btc-rate/tree/genesis/hw-test)
 [Project Schema](https://github.com/Greifrut/btc-rate/tree/genesis/hw-project-schema)
 [Microservice](https://github.com/Greifrut/btc-rate/tree/genesis/hw-microservice)
+[Rabbit MQ](https://github.com/Greifrut/btc-rate/tree/genesis/hw-rabbitmq)
 
 # API endpoints
 
