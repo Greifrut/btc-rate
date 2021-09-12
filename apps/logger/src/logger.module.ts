@@ -1,10 +1,18 @@
+import { ConfigModule } from '@nestjs/config';
 import { Module } from '@nestjs/common';
-import { LoggerController } from './logger.controller';
-import { LoggerService } from './logger.service';
+
+import { CommonModule } from './modules/common/common.module';
+import { BaseModule } from './modules/base/base.module';
+import configuration from './config/configuration';
 
 @Module({
-  imports: [],
-  controllers: [LoggerController],
-  providers: [LoggerService],
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [configuration],
+    }),
+    CommonModule,
+    BaseModule,
+  ],
 })
 export class LoggerModule {}

@@ -1,8 +1,30 @@
+import { ConfigService } from './modules/common/services/config.service';
 import { NestFactory } from '@nestjs/core';
+
+import { MicroserviceOptions, Transport } from '@nestjs/microservices';
 import { LoggerModule } from './logger.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(LoggerModule);
-  await app.listen(3000);
+
+  const configService = app.get<ConfigService>(ConfigService);
+
+  const queueName = configService.get('rmq.queueName');
+  const password = configService.get('rmq.password');
+  const user = configService.get('rmq.user');
+  const host = configService.get('rmq.host');
+
+  await app.connectMicroservice<MicroserviceOptions>({
+    transport: Transport.RMQ,
+    options: {
+      urls: [`amqp://${user}:${password}@${host}`],
+      queue: queueName,
+      queueOptions: {
+        durable: false,
+      },
+    },
+  });
+
+  await app.startAllMicroservices();
 }
 bootstrap();
