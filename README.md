@@ -56,7 +56,9 @@ Also, token will save in cookies.
 **Project Structure**
 
 `apps/api-gateway`: HTTP gateway
+
 `apps/crypto-rate`: gRPC microservice for getting information about BTC Rate
+
 `apps/users`: TCP microservice which working with user data
 
 **How run project**
