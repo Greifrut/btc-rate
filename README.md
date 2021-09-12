@@ -1,3 +1,11 @@
+# Home Work
+
+[Code Review](https://github.com/Greifrut/ses_homework_1)
+[Solid Principles](https://github.com/GenesisEducationKyiv/se-school-hw2-Greifrut)
+[Testing](https://github.com/Greifrut/btc-rate/tree/genesis/hw-test)
+[Project Schema](https://github.com/Greifrut/btc-rate/tree/genesis/hw-project-schema)
+[Microservice](https://github.com/Greifrut/btc-rate/tree/genesis/hw-microservice)
+
 # API endpoints
 
 ##GET
