@@ -1,5 +1,39 @@
 # API endpoints
 
+#Running
+### **NodeJS**
+
+Download and install NodeJS for your platform [Link](https://nodejs.org/uk/)
+
+### **Docker**
+```bash
+# Run rabbit-mq container
+docker run -d --hostname my-rabbit --name some-rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+```
+
+### **Project**
+
+**1. Clone Repository:**
+```bash
+git clone git@github.com:Greifrut/btc-rate.git
+```
+**2. Open cloned project**
+
+**3. Change a current branch to genesis/hw-rabbitmq**
+
+**4. Install dependencies**
+```bash
+npm i
+```
+**5. Run microservices**
+```bash
+npm run start:gateway
+npm run start:users
+npm run start:rate
+npm run start:logger
+```
+
+
 ##GET
 `Getting information about btc rate`[/btcRate](#get-btcRate) </br>
 
