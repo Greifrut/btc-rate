@@ -4,8 +4,7 @@ import { User } from '../../../typings/types/User';
 
 export class UserService implements IUserService {
   constructor(private readonly database: IDb, private readonly dbName: string) {
-    this.register = this.register.bind(this);
-    this.login = this.login.bind(this);
+    this.database.createTable('users');
   }
 
   async login({ email, password }: User): Promise<User> {

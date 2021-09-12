@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Inject, Post, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Inject,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ClientGrpc, ClientProxy } from '@nestjs/microservices';
 import { lastValueFrom, timeout } from 'rxjs';
 
@@ -8,6 +16,7 @@ import {
   USER_MICROSERVICE,
 } from '../../../constants/symbols';
 import { CryptoRateInterface } from '../../../typings/interfaces/crypto-rate.interface';
+import { VerificationGuard } from '../gurds/verification.guard';
 
 @Controller()
 export class BaseController implements IApiGatewayController {
@@ -18,23 +27,25 @@ export class BaseController implements IApiGatewayController {
     readonly cryptoClient: ClientGrpc,
   ) {}
 
-  @Post('/user/create') registerUser() {
+  @Post('/user/create') registerUser(@Body() user: any) {
     const response$ = this.userClient
-      .send({ cmd: 'createUser' }, {})
+      .send({ cmd: 'createUser' }, user)
       .pipe(timeout(2000));
 
     return lastValueFrom(response$);
   }
 
-  @Post('/user/login') loginUser() {
+  @Post('/user/login') loginUser(@Body() user: any) {
     const response$ = this.userClient
-      .send({ cmd: 'loginUser' }, {})
+      .send({ cmd: 'loginUser' }, user)
       .pipe(timeout(2000));
 
     return lastValueFrom(response$);
   }
 
-  @Get('btcRate') getBtcRate(@Query('coins') coins = 1) {
+  @Get('btcRate')
+  @UseGuards(VerificationGuard)
+  getBtcRate(@Query('coins') coins = 1) {
     const cryptoGRPC =
       this.cryptoClient.getService<CryptoRateInterface>('CryptoRateService');
 

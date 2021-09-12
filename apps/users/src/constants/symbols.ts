@@ -1,0 +1,4 @@
+export const USER_SERVICE = 'USER_SERVICE';
+export const DATABASE = 'DATABASE';
+export const JWT_SERVICE = 'JWT_SERVICE';
+export const VERIFY_USER_SERVICE = 'VERIFY_USER_SERVICE';

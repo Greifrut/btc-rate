@@ -4,9 +4,9 @@ export interface IApiGatewayController {
   readonly userClient: ClientProxy;
   readonly cryptoClient: ClientGrpc;
 
-  registerUser(): Promise<unknown>;
+  registerUser(user: any): Promise<unknown>;
 
-  loginUser(): Promise<unknown>;
+  loginUser(user: any): Promise<unknown>;
 
   getBtcRate(): Promise<unknown>;
 }

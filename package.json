@@ -10,6 +10,9 @@
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
+    "start:gateway": "nest start api-gateway",
+    "start:rate": "nest start crypto-rate",
+    "start:users": "nest start users",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -30,6 +33,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "axios": "^0.21.3",
     "class-validator": "^0.13.1",
+    "jsonwebtoken": "^8.5.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
