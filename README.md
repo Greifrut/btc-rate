@@ -53,14 +53,17 @@ Also, token will save in cookies.
 |     `password`| true | string | UserService password |
 |     `token`| true | string | JWT Token for auth |
 
-**Test**
+**Project Structure**
+`apps/api-gateway`: HTTP gateway
+`apps/crypto-rate`: gRPC microservice for getting information about BTC Rate
+`apps/users`: TCP microservice which working with user data
+
+**How run project**
 ```bash
-# Run all test
-npm run test:all
-
-#Run integration tests
-npm run test:int
-
-#Run unit tests
-npm run test:unit
+# Start API-GATEWAY
+npm run start:gateway
+#Start CRYPTO-RATE
+npm run start:rate
+#Start USERS
+npm run start:users
 ```
