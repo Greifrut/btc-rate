@@ -1,11 +1,12 @@
 import { Module } from '@nestjs/common';
-import { databaseConnector } from './db';
-import { FileDB } from './db/fileDB';
-import { JwtService } from './services/jwt.service';
+
+import { ConfigService } from '../../../../__config__/config.service';
 import { DATABASE, JWT_SERVICE } from '../../constants/symbols';
+import { JwtService } from './services/jwt.service';
 import { IDb } from '../../typings/interfaces/IDB';
 import { TokenUtils } from '../../utils/token.util';
-import { ConfigService } from './services/config.service';
+import { databaseConnector } from './db';
+import { FileDB } from './db/fileDB';
 
 const database = {
   provide: DATABASE,

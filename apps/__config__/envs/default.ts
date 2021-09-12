@@ -14,4 +14,12 @@ export const config = {
       ),
     },
   },
+  btcApi: 'https://api.coindesk.com/v1/bpi/currentprice/UAH.json',
+  cookieName: 'btcAppToken',
+  rmq: {
+    user: 'guest',
+    password: 'guest',
+    host: 'localhost:5672',
+    queueName: 'logger_queue',
+  },
 };

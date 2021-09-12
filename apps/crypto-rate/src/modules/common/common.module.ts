@@ -1,9 +1,9 @@
 import { Module } from '@nestjs/common';
 import axios from 'axios';
 
-import { ConfigService } from './services/config.service';
-import { REQUEST_SERVICE } from '../../constants/symbols';
+import { ConfigService } from '../../../../__config__/config.service';
 import { RequestService } from './services/request.service';
+import { REQUEST_SERVICE } from '../../constants/symbols';
 
 const requestService = {
   provide: REQUEST_SERVICE,

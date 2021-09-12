@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 
 import { BaseModule } from './modules/base/base.module';
-import configuration from './config/configuration';
+import configuration from '../../__config__/configuration';
 
 @Module({
   imports: [

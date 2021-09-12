@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { ConfigService } from './services/config.service';
+import { ConfigService } from '../../../../__config__/config.service';
 
 @Module({
   providers: [ConfigService],
