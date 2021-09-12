@@ -12,6 +12,7 @@ import { IUserService } from '../../../typings/interfaces/IUserService';
 import { IJwtService } from '../../../typings/interfaces/IJwtService';
 import { UserDto } from '../../../typings/dto/user.dto';
 import { User } from '../../../typings/types/User';
+import { ServiceResponse } from '../../../../../typings/service-response.type';
 
 @Controller()
 export class BaseController {
@@ -35,13 +36,25 @@ export class BaseController {
   }
 
   @MessagePattern({ cmd: 'createUser' })
-  async createUser(userDto: UserDto): Promise<UserCredentials> {
-    return this.processUser(userDto, 'register');
+  async createUser(
+    userDto: UserDto,
+  ): Promise<ServiceResponse<UserCredentials>> {
+    try {
+      const registerResponse = await this.processUser(userDto, 'register');
+      return [registerResponse, null];
+    } catch (e) {
+      return [null, e.message];
+    }
   }
 
   @MessagePattern({ cmd: 'loginUser' })
-  async loginUser(userDto: UserDto): Promise<UserCredentials> {
-    return this.processUser(userDto, 'login');
+  async loginUser(userDto: UserDto): Promise<ServiceResponse<UserCredentials>> {
+    try {
+      const loginResponse = await this.processUser(userDto, 'login');
+      return [loginResponse, null];
+    } catch (e) {
+      return [null, e.message];
+    }
   }
 
   @MessagePattern({ cmd: 'verify' })
