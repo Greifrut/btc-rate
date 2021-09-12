@@ -14,7 +14,9 @@
       "entryFile": "main",
       "sourceRoot": "apps/api-gateway/src",
       "compilerOptions": {
-        "assets": ["**/*.proto"],
+        "assets": [
+          "**/*.proto"
+        ],
         "tsConfigPath": "apps/api-gateway/tsconfig.app.json",
         "watchAssets": true
       }
@@ -34,9 +36,20 @@
       "entryFile": "main",
       "sourceRoot": "apps/crypto-rate/src",
       "compilerOptions": {
-        "assets": ["**/*.proto"],
+        "assets": [
+          "**/*.proto"
+        ],
         "tsConfigPath": "apps/crypto-rate/tsconfig.app.json",
         "watchAssets": true
+      }
+    },
+    "logger": {
+      "type": "application",
+      "root": "apps/logger",
+      "entryFile": "main",
+      "sourceRoot": "apps/logger/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/logger/tsconfig.app.json"
       }
     }
   }
