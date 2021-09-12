@@ -9,8 +9,8 @@ import {
   CRYPTO_RATE_MICROSERVICE,
   USER_MICROSERVICE,
 } from '../../constants/symbols';
-import { ConfigService } from '../common/services/config.service';
 import { CommonModule } from '../common/common.module';
+import { ConfigService } from '../../../../__config__/config.service';
 
 const UserMicroservice = {
   provide: USER_MICROSERVICE,

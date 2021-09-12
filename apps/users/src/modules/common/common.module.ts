@@ -1,12 +1,13 @@
 import { Module } from '@nestjs/common';
 
 import { ConfigService } from '../../../../__config__/config.service';
-import { DATABASE, JWT_SERVICE } from '../../constants/symbols';
+import { DATABASE, JWT_SERVICE, LOGGER_CLIENT } from '../../constants/symbols';
 import { JwtService } from './services/jwt.service';
 import { IDb } from '../../typings/interfaces/IDB';
 import { TokenUtils } from '../../utils/token.util';
 import { databaseConnector } from './db';
 import { FileDB } from './db/fileDB';
+import { ClientProxyFactory, Transport } from '@nestjs/microservices';
 
 const database = {
   provide: DATABASE,
@@ -14,6 +15,29 @@ const database = {
     return databaseConnector.use(new FileDB(`${__dirname}/db/tables/`));
   },
 };
+
+const loggerClient = {
+  provide: LOGGER_CLIENT,
+  useFactory: (configService: ConfigService) => {
+    const user = configService.get('rmq.user');
+    const password = configService.get('rmq.password');
+    const host = configService.get('rmq.host');
+    const queueName = configService.get('rmq.queueName');
+
+    return ClientProxyFactory.create({
+      transport: Transport.RMQ,
+      options: {
+        urls: [`amqp://${user}:${password}@${host}`],
+        queue: queueName,
+        queueOptions: {
+          durable: false,
+        },
+      },
+    });
+  },
+  inject: [ConfigService],
+};
+
 const jwtService = {
   provide: JWT_SERVICE,
   useFactory: (database: IDb) => {
@@ -28,7 +52,7 @@ const jwtService = {
 };
 
 @Module({
-  providers: [ConfigService, database, jwtService],
-  exports: [ConfigService, database, jwtService],
+  providers: [ConfigService, database, jwtService, loggerClient],
+  exports: [ConfigService, database, jwtService, loggerClient],
 })
 export class CommonModule {}

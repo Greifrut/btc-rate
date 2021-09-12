@@ -35,9 +35,10 @@ export class BaseController implements IApiGatewayController {
     return lastValueFrom(response$);
   }
 
-  @Post('/user/login') loginUser(@Body() user: any) {
+  @Post('/user/login') loginUser(@Body() userDto: any) {
+    console.log({ userDto: JSON.stringify(userDto) });
     const response$ = this.userClient
-      .send({ cmd: 'loginUser' }, user)
+      .send({ cmd: 'loginUser' }, userDto)
       .pipe(timeout(2000));
 
     return lastValueFrom(response$);

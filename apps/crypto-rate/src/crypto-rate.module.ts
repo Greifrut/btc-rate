@@ -1,8 +1,9 @@
-import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { Module } from '@nestjs/common';
 
-import { BaseModule } from './modules/base/base.module';
+import { CommonModule } from './modules/common/common.module';
 import configuration from '../../__config__/configuration';
+import { BaseModule } from './modules/base/base.module';
 
 @Module({
   imports: [
@@ -10,6 +11,7 @@ import configuration from '../../__config__/configuration';
       isGlobal: true,
       load: [configuration],
     }),
+    CommonModule,
     BaseModule,
   ],
 })
